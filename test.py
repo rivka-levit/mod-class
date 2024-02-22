@@ -43,3 +43,22 @@ class TestModClassInit(TestCase):
 
         with self.assertRaises(ValueError):
             Mod(v, m)
+
+
+class TestMod(TestCase):
+    """Tests for Mod class functionality."""
+
+    def setUp(self):
+        self.mod = Mod(2, 3)
+
+    def test_repr(self):
+        """Test the __repr__ method."""
+
+        expected = 'Mod(value=2, modulus=3)'
+        self.assertEqual(repr(self.mod), expected)
+
+    def test_str_method(self):
+        """Test the __str__ method."""
+
+        expected = 'Mod(2, 3)'
+        self.assertEqual(str(self.mod), expected)

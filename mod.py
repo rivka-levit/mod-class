@@ -16,7 +16,7 @@ class Mod:
         return self._modulus
 
     def __repr__(self):
-        raise f'Mod(value={self.value}, modulus={self.modulus})'
+        return f'Mod(value={self.value}, modulus={self.modulus})'
 
     def __str__(self):
-        raise f'Mod({self.value}, {self.modulus})'
+        return f'Mod({self.value}, {self.modulus})'
