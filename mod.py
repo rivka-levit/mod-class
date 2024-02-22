@@ -14,3 +14,9 @@ class Mod:
     @property
     def modulus(self) -> int:
         return self._modulus
+
+    def __repr__(self):
+        raise f'Mod(value={self.value}, modulus={self.modulus})'
+
+    def __str__(self):
+        raise f'Mod({self.value}, {self.modulus})'
