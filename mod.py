@@ -20,3 +20,11 @@ class Mod:
 
     def __str__(self):
         return f'Mod({self.value}, {self.modulus})'
+
+    def __eq__(self, other):
+        if isinstance(other, Mod):
+            return self.modulus == other.modulus and self.value == other.value
+        if isinstance(other, int):
+            return self.value == 0
+
+        return False

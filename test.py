@@ -49,7 +49,7 @@ class TestMod(TestCase):
     """Tests for Mod class functionality."""
 
     def setUp(self):
-        self.mod = Mod(2, 3)
+        self.mod = Mod(8, 3)
 
     def test_repr(self):
         """Test the __repr__ method."""
@@ -62,3 +62,20 @@ class TestMod(TestCase):
 
         expected = 'Mod(2, 3)'
         self.assertEqual(str(self.mod), expected)
+
+    def test_two_mod_equality(self):
+        """Test to mod instances equality."""
+
+        mod_1 = Mod(17, 3)
+        mod_2 = Mod(18, 3)
+
+        self.assertEqual(self.mod, mod_1)
+        self.assertNotEqual(self.mod, mod_2)
+
+    def test_mod_int_equality(self):
+        """Test the equality of mod instance to an integer."""
+
+        mod = Mod(9, 3)
+        num = 11
+
+        self.assertEqual(mod, num)
