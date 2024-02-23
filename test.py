@@ -80,8 +80,20 @@ class TestMod(TestCase):
 
         self.assertEqual(mod, num)
 
+    def test_mod_int_not_equality(self):
+        """Test not equal mod to an integer."""
+
+        num = 11
+        self.assertNotEqual(self.mod, num)
+
     def test_hash_method(self):
         """Test the __hash__ method."""
 
-        expected = 2
+        expected = self.mod.value
         self.assertEqual(hash(self.mod), expected)
+
+    def test_int_return_residue(self):
+        """Test the int function return residue."""
+
+        expected = self.mod.value
+        self.assertEqual(int(self.mod), expected)

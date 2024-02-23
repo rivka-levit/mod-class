@@ -31,3 +31,6 @@ class Mod:
 
     def __hash__(self):
         return self.value
+
+    def __int__(self):
+        return self.value
