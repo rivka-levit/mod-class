@@ -79,3 +79,9 @@ class TestMod(TestCase):
         num = 11
 
         self.assertEqual(mod, num)
+
+    def test_hash_method(self):
+        """Test the __hash__ method."""
+
+        expected = 2
+        self.assertEqual(hash(self.mod), expected)

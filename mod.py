@@ -28,3 +28,6 @@ class Mod:
             return self.value == 0
 
         return False
+
+    def __hash__(self):
+        return self.value
