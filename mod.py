@@ -30,7 +30,7 @@ class Mod:
         return False
 
     def __hash__(self):
-        return self.value
+        return self.value + self.modulus
 
     def __int__(self):
         return self.value

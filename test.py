@@ -89,8 +89,15 @@ class TestMod(TestCase):
     def test_hash_method(self):
         """Test the __hash__ method."""
 
-        expected = self.mod.value
+        expected = self.mod.value + self.mod.modulus
         self.assertEqual(hash(self.mod), expected)
+
+    def test_hash_mods_with_different_modulus(self):
+        """Test the __hash__ of two mods with the same value and different
+        modulus."""
+
+        s = {self.mod, Mod(14, 6)}
+        self.assertEqual(len(s), 2)
 
     def test_int_return_residue(self):
         """Test the int function return residue."""
