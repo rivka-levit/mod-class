@@ -137,3 +137,12 @@ class TestMod(TestCase):
         mod = Mod(11, 4)
         with self.assertRaises(TypeError):
             self.mod + mod
+
+    def test_right_add_mod_to_int(self):
+        """Test adding a mod to an integer."""
+
+        new_mod = 11 + self.mod
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)

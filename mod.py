@@ -50,3 +50,6 @@ class Mod:
             return Mod(new_value, self.modulus)
 
         return NotImplemented
+
+    def __radd__(self, other):
+        return self.__add__(other)
