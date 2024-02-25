@@ -15,6 +15,9 @@ class Mod:
     def modulus(self) -> int:
         return self._modulus
 
+    def validate_modulus(self, mod_obj):
+        return mod_obj.modulus == self.modulus
+
     def __repr__(self):
         return f'Mod(value={self.value}, modulus={self.modulus})'
 
@@ -34,3 +37,16 @@ class Mod:
 
     def __int__(self):
         return self.value
+
+    def __add__(self, other):
+        if isinstance(other, int):
+            new_value = self.value + other
+
+            return Mod(new_value, self.modulus)
+
+        if isinstance(other, Mod) and self.validate_modulus(other):
+            new_value = self.value + other.value
+
+            return Mod(new_value, self.modulus)
+
+        return NotImplemented

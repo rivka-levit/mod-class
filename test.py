@@ -104,3 +104,36 @@ class TestMod(TestCase):
 
         expected = self.mod.value
         self.assertEqual(int(self.mod), expected)
+
+    def test_add_two_mods(self):
+        """Test adding two mod instances with the same modulus."""
+
+        mod = Mod(11, 3)
+
+        result = self.mod + mod
+
+        self.assertIsInstance(result, Mod)
+        self.assertEqual(result.value, 1)
+        self.assertEqual(result.modulus, self.mod.modulus)
+
+    def test_add_mod_to_int(self):
+        """Test adding an integer to a mod instance."""
+
+        new_mod = self.mod + 11
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_add_mod_to_float_error(self):
+        """Test adding a float to a mod instance raises an error."""
+
+        with self.assertRaises(TypeError):
+            self.mod + 5.3
+
+    def test_add_two_mods_with_different_modulus_error(self):
+        """Test adding two mods with different modulus raises an error."""
+
+        mod = Mod(11, 4)
+        with self.assertRaises(TypeError):
+            self.mod + mod
