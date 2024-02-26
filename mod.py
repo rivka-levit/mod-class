@@ -44,12 +44,15 @@ class Mod:
 
             return Mod(new_value, self.modulus)
 
-        if isinstance(other, Mod) and self.validate_modulus(other):
-            new_value = self.value + other.value
+        if not isinstance(other, Mod):
+            return NotImplemented
 
-            return Mod(new_value, self.modulus)
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot add Mod object with different '
+                            'modulus.')
 
-        return NotImplemented
+        new_value = self.value + other.value
+        return Mod(new_value, self.modulus)
 
     def __radd__(self, other):
         return self.__add__(other)
@@ -60,12 +63,15 @@ class Mod:
 
             return Mod(new_value, self.modulus)
 
-        if isinstance(other, Mod) and self.validate_modulus(other):
-            new_value = self.value - other.value
+        if not isinstance(other, Mod):
+            return NotImplemented
 
-            return Mod(new_value, self.modulus)
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot subtract Mod object with different '
+                            'modulus.')
 
-        return NotImplemented
+        new_value = self.value - other.value
+        return Mod(new_value, self.modulus)
 
     def __rsub__(self, other):
         if isinstance(other, int):
