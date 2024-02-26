@@ -99,3 +99,8 @@ class Mod:
 
     def __rmul__(self, other):
         return self.__mul__(other)
+
+    def __pow__(self, power, modulo=None):
+        new_value = self.value ** power
+
+        return Mod(new_value, self.modulus)
