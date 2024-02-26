@@ -66,3 +66,11 @@ class Mod:
             return Mod(new_value, self.modulus)
 
         return NotImplemented
+
+    def __rsub__(self, other):
+        if isinstance(other, int):
+            new_value = other - self.value
+
+            return Mod(new_value, self.modulus)
+
+        return NotImplemented

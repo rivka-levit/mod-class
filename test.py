@@ -172,3 +172,12 @@ class TestMod(TestCase):
         self.assertIsInstance(new_mod, Mod)
         self.assertEqual(new_mod.value, 1)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_subtract_mod_from_int(self):
+        """Test subtracting a mod from an integer."""
+
+        new_mod = 12 - self.mod
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)
