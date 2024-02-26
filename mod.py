@@ -74,3 +74,22 @@ class Mod:
             return Mod(new_value, self.modulus)
 
         return NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other, int):
+            new_value = self.value * other
+
+            return Mod(new_value, self.modulus)
+
+        if not isinstance(other, Mod):
+            return NotImplemented
+
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot multiply Mod objects with different '
+                            'modulus.')
+
+        new_value = self.value * other.value
+        return Mod(new_value, self.modulus)
+
+    def __rmul__(self, other):
+        return self.__mul__(other)

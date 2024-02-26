@@ -181,3 +181,38 @@ class TestMod(TestCase):
         self.assertIsInstance(new_mod, Mod)
         self.assertEqual(new_mod.value, 1)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_multiply_two_mods(self):
+        """Test multiplying two mods."""
+
+        new_mod = Mod(2, 3) * self.mod
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_multiply_mod_by_int(self):
+        """Test multiplying a mod by an integer."""
+
+        new_mod = self.mod * 2
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_multiply_int_by_mod(self):
+        """Test multiplying an integer by a mod."""
+
+        new_mod = 2 * self.mod
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_multiply_mods_with_different_modulus_error(self):
+        """Test multiplying with different modulus raises an error."""
+
+        mod = Mod(5, 4)
+
+        with self.assertRaises(TypeError):
+            mod * self.mod
