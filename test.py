@@ -146,3 +146,29 @@ class TestMod(TestCase):
         self.assertIsInstance(new_mod, Mod)
         self.assertEqual(new_mod.value, 1)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_subtract_mod_from_mod(self):
+        """Test subtracting mod from another mod with the same modulus."""
+
+        mod = Mod(12, 3)
+        new_mod = mod - self.mod
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_sub_mod_with_different_modulus_error(self):
+        """Test adding two mods with different modulus raises an error."""
+
+        mod = Mod(11, 4)
+        with self.assertRaises(TypeError):
+            mod - self.mod
+
+    def test_subtract_int_from_mod(self):
+        """Subtracting an integer from a mod."""
+
+        new_mod = self.mod - 4
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)

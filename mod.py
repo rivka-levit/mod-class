@@ -53,3 +53,16 @@ class Mod:
 
     def __radd__(self, other):
         return self.__add__(other)
+
+    def __sub__(self, other):
+        if isinstance(other, int):
+            new_value = self.value - other
+
+            return Mod(new_value, self.modulus)
+
+        if isinstance(other, Mod) and self.validate_modulus(other):
+            new_value = self.value - other.value
+
+            return Mod(new_value, self.modulus)
+
+        return NotImplemented
