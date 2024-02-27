@@ -225,3 +225,26 @@ class TestMod(TestCase):
         self.assertIsInstance(new_mod, Mod)
         self.assertEqual(new_mod.value, 1)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_add_in_place_two_mods(self):
+        """Test adding two mods in place."""
+
+        mod_1 = Mod(2, 3)
+        mod_2 = Mod(5, 3)
+        mod_id = id(mod_1)
+
+        mod_1 += mod_2
+
+        self.assertEqual(mod_1.value, 1)
+        self.assertEqual(id(mod_1), mod_id)
+
+    def test_add_in_place_int_to_mod(self):
+        """Test adding an integer to a mod in place."""
+
+        mod = Mod(2, 3)
+        mod_id = id(mod)
+
+        mod += 4
+
+        self.assertEqual(id(mod), mod_id)
+        self.assertEqual(mod.value, 0)

@@ -104,3 +104,19 @@ class Mod:
         new_value = self.value ** power
 
         return Mod(new_value, self.modulus)
+
+    def __iadd__(self, other):
+        if isinstance(other, int):
+            self._value = (self.value + other) % self.modulus
+
+            return self
+
+        if not isinstance(other, Mod):
+            return NotImplemented
+
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot add Mod object with different '
+                            'modulus.')
+
+        self._value = (self.value + other.value) % self.modulus
+        return self
