@@ -271,3 +271,26 @@ class TestMod(TestCase):
 
         self.assertEqual(id(mod), mod_id)
         self.assertEqual(mod.value, 1)
+
+    def test_mul_in_place_two_mods(self):
+        """Test multiplying two mods in place."""
+
+        mod_1 = Mod(18, 5)
+        mod_2 = Mod(7, 5)
+        mod_id = id(mod_1)
+
+        mod_1 *= mod_2
+
+        self.assertEqual(id(mod_1), mod_id)
+        self.assertEqual(mod_1.value, 1)
+
+    def test_mul_in_place_mod_by_int(self):
+        """Test multiplying a mod by an integer"""
+
+        mod = Mod(3, 5)
+        mod_id = id(mod)
+
+        mod *= 4
+
+        self.assertEqual(id(mod), mod_id)
+        self.assertEqual(mod.value, 2)

@@ -136,3 +136,19 @@ class Mod:
 
         self._value = (self.value - other.value) % self.modulus
         return self
+
+    def __imul__(self, other):
+        if isinstance(other, int):
+            self._value = (self.value * other) % self.modulus
+
+            return self
+
+        if not isinstance(other, Mod):
+            return NotImplemented
+
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot multiply Mod object with different '
+                            'modulus.')
+
+        self._value = (self.value * other.value) % self.modulus
+        return self
