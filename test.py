@@ -248,3 +248,26 @@ class TestMod(TestCase):
 
         self.assertEqual(id(mod), mod_id)
         self.assertEqual(mod.value, 0)
+
+    def test_sub_in_place_two_mods(self):
+        """Test subtracting two mods in place."""
+
+        mod_1 = Mod(7, 2)
+        mod_2 = Mod(-3, 2)
+        mod_id = id(mod_1)
+
+        mod_1 -= mod_2
+
+        self.assertEqual(id(mod_1), mod_id)
+        self.assertEqual(mod_1.value, 0)
+
+    def test_sub_in_place_int_from_mod(self):
+        """Test subtracting an integer from a mod in place."""
+
+        mod = Mod(7, 2)
+        mod_id = id(mod)
+
+        mod -= 4
+
+        self.assertEqual(id(mod), mod_id)
+        self.assertEqual(mod.value, 1)
