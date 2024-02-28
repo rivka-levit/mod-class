@@ -152,3 +152,10 @@ class Mod:
 
         self._value = (self.value * other.value) % self.modulus
         return self
+
+    def __ipow__(self, other):
+        if not isinstance(other, int):
+            return NotImplemented
+
+        self._value = (self.value ** other) % self.modulus
+        return self

@@ -294,3 +294,14 @@ class TestMod(TestCase):
 
         self.assertEqual(id(mod), mod_id)
         self.assertEqual(mod.value, 2)
+
+    def test_pow_mod_in_place(self):
+        """Test power mod in place."""
+
+        mod = Mod(3, 5)
+        mod_id = id(mod)
+
+        mod **= 2
+
+        self.assertEqual(id(mod), mod_id)
+        self.assertEqual(mod.value, 4)
