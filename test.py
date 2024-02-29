@@ -305,3 +305,32 @@ class TestMod(TestCase):
 
         self.assertEqual(id(mod), mod_id)
         self.assertEqual(mod.value, 4)
+
+    def test_comparison_mod_to_mod(self):
+        """Test comparison of two mods."""
+
+        mod = Mod(4, 3)
+
+        self.assertTrue(self.mod > mod)
+        self.assertFalse(self.mod < mod)
+        self.assertFalse(self.mod == mod)
+        self.assertTrue(self.mod >= mod)
+        self.assertFalse(self.mod <= mod)
+
+    def test_comparison_mod_to_integer(self):
+        """Test comparison of a mod and an integer."""
+
+        num = 3
+
+        self.assertTrue(self.mod > num)
+        self.assertTrue(self.mod >= num)
+        self.assertTrue(num < self.mod)
+        self.assertFalse(self.mod < num)
+
+    def test_comparison_two_mods_with_different_modulus_error(self):
+        """Test comparison of two mods with different modulus raises error."""
+
+        mod = Mod(4, 5)
+
+        with self.assertRaises(TypeError):
+            a = self.mod > mod

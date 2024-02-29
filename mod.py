@@ -1,3 +1,7 @@
+from functools import total_ordering
+
+
+@total_ordering
 class Mod:
     def __init__(self, value: int, modulus: int):
         if not isinstance(value, int) or not isinstance(modulus, int):
@@ -159,3 +163,16 @@ class Mod:
 
         self._value = (self.value ** other) % self.modulus
         return self
+
+    def __lt__(self, other):
+        if isinstance(other, int):
+            return self.value < 0
+
+        if not isinstance(other, Mod):
+            return NotImplemented
+
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot compare Mod object with different '
+                            'modulus.')
+
+        return self.value < other.value
