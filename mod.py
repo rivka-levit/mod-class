@@ -37,14 +37,17 @@ class Mod:
 
     def __eq__(self, other):
         if isinstance(other, Mod):
-            return self.modulus == other.modulus and self.value == other.value
+            if self.modulus == other.modulus:
+                return self.value == other.value
+            else:
+                return NotImplemented
         if isinstance(other, int):
-            return self.value == 0
+            return other % self.modulus == self.value
 
-        return False
+        return NotImplemented
 
     def __hash__(self):
-        return self.value + self.modulus
+        return hash((self.value, self.modulus))
 
     def __int__(self):
         return self.value

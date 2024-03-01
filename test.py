@@ -76,20 +76,20 @@ class TestMod(TestCase):
         """Test the equality of mod instance to an integer."""
 
         mod = Mod(9, 3)
-        num = 11
+        num = 12
 
         self.assertEqual(mod, num)
 
     def test_mod_int_not_equality(self):
         """Test not equal mod to an integer."""
 
-        num = 11
+        num = 12
         self.assertNotEqual(self.mod, num)
 
     def test_hash_method(self):
         """Test the __hash__ method."""
 
-        expected = self.mod.value + self.mod.modulus
+        expected = hash((self.mod.value, self.mod.modulus))
         self.assertEqual(hash(self.mod), expected)
 
     def test_hash_mods_with_different_modulus(self):
