@@ -5,7 +5,7 @@ from functools import total_ordering
 class Mod:
     def __init__(self, value: int, modulus: int):
         if not isinstance(value, int) or not isinstance(modulus, int):
-            raise ValueError('Value and modulus must be integers!')
+            raise TypeError('Value and modulus must be integers!')
         if modulus <= 0:
             raise ValueError('Modulus must be a positive number!')
         self._value = value % modulus
@@ -14,6 +14,13 @@ class Mod:
     @property
     def value(self) -> int:
         return self._value
+
+    @value.setter
+    def value(self, value: int) -> None:
+        if not isinstance(value, int):
+            raise TypeError('Value must be an integer!')
+
+        self._value = value % self.modulus
 
     @property
     def modulus(self) -> int:
@@ -122,12 +129,13 @@ class Mod:
             raise TypeError('Cannot add Mod object with different '
                             'modulus.')
 
-        self._value = (self.value + other.value) % self.modulus
+        # self._value = (self.value + other.value) % self.modulus
+        self.value = self.value + other.value
         return self
 
     def __isub__(self, other):
         if isinstance(other, int):
-            self._value = (self.value - other) % self.modulus
+            self.value = self.value - other
 
             return self
 
@@ -138,12 +146,12 @@ class Mod:
             raise TypeError('Cannot subtract Mod object with different '
                             'modulus.')
 
-        self._value = (self.value - other.value) % self.modulus
+        self.value = self.value - other.value
         return self
 
     def __imul__(self, other):
         if isinstance(other, int):
-            self._value = (self.value * other) % self.modulus
+            self.value = self.value * other
 
             return self
 
@@ -154,14 +162,14 @@ class Mod:
             raise TypeError('Cannot multiply Mod object with different '
                             'modulus.')
 
-        self._value = (self.value * other.value) % self.modulus
+        self.value = self.value * other.value
         return self
 
     def __ipow__(self, other):
         if not isinstance(other, int):
             return NotImplemented
 
-        self._value = (self.value ** other) % self.modulus
+        self.value = self.value ** other
         return self
 
     def __lt__(self, other):

@@ -23,7 +23,7 @@ class TestModClassInit(TestCase):
         v = 5.3
         m = 3
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             Mod(v, m)
 
     def test_negative_modulus_error(self):
