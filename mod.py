@@ -8,8 +8,9 @@ class Mod:
             raise TypeError('Value and modulus must be integers!')
         if modulus <= 0:
             raise ValueError('Modulus must be a positive number!')
-        self._value = value % modulus
         self._modulus = modulus
+        self._value = None
+        self.value = value
 
     @property
     def value(self) -> int:
@@ -20,7 +21,12 @@ class Mod:
         if not isinstance(value, int):
             raise TypeError('Value must be an integer!')
 
-        self._value = value % self.modulus
+        new_value = value % self.modulus
+
+        if value < 0:
+            self._value = new_value - self.modulus
+        else:
+            self._value = new_value
 
     @property
     def modulus(self) -> int:
@@ -52,6 +58,9 @@ class Mod:
     def __int__(self):
         return self.value
 
+    def __neg__(self):
+        return Mod(-self.value, self.modulus)
+
     def __add__(self, other):
         if isinstance(other, int):
             new_value = self.value + other
@@ -65,7 +74,7 @@ class Mod:
             raise TypeError('Cannot add Mod object with different '
                             'modulus.')
 
-        new_value = self.value + other.value
+        new_value = (self.value + other.value) % self.modulus
         return Mod(new_value, self.modulus)
 
     def __radd__(self, other):
@@ -132,7 +141,6 @@ class Mod:
             raise TypeError('Cannot add Mod object with different '
                             'modulus.')
 
-        # self._value = (self.value + other.value) % self.modulus
         self.value = self.value + other.value
         return self
 

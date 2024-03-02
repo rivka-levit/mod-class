@@ -17,6 +17,19 @@ class TestModClassInit(TestCase):
         self.assertEqual(mod_1.value, v % m)
         self.assertEqual(mod_1.modulus, m)
 
+    def test_create_mod_with_neg_value(self):
+        """Test creating a mod instance with negative value."""
+
+        v = -8
+        m = 3
+
+        expected_value = -2
+
+        mod = Mod(v, m)
+
+        self.assertEqual(mod.value, expected_value)
+        self.assertEqual(mod.modulus, m)
+
     def test_non_int_value_error(self):
         """Test creating a mod with non-int value raises an error."""
 
@@ -92,6 +105,13 @@ class TestMod(TestCase):
         expected = hash((self.mod.value, self.mod.modulus))
         self.assertEqual(hash(self.mod), expected)
 
+    def test_negation_method(self):
+        """Test the __neg__ method."""
+
+        neg_mod = Mod(-8, 3)
+
+        self.assertEqual(neg_mod.value, -self.mod.value)
+
     def test_hash_mods_with_different_modulus(self):
         """Test the __hash__ of two mods with the same value and different
         modulus."""
@@ -150,11 +170,11 @@ class TestMod(TestCase):
     def test_subtract_mod_from_mod(self):
         """Test subtracting mod from another mod with the same modulus."""
 
-        mod = Mod(12, 3)
+        mod = Mod(13, 3)
         new_mod = mod - self.mod
 
         self.assertIsInstance(new_mod, Mod)
-        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.value, -1)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
 
     def test_sub_mod_with_different_modulus_error(self):
@@ -170,7 +190,7 @@ class TestMod(TestCase):
         new_mod = self.mod - 4
 
         self.assertIsInstance(new_mod, Mod)
-        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.value, -2)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
 
     def test_subtract_mod_from_int(self):
@@ -270,7 +290,7 @@ class TestMod(TestCase):
         mod -= 4
 
         self.assertEqual(id(mod), mod_id)
-        self.assertEqual(mod.value, 1)
+        self.assertEqual(mod.value, -1)
 
     def test_mul_in_place_two_mods(self):
         """Test multiplying two mods in place."""
