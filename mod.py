@@ -186,7 +186,7 @@ class Mod:
 
     def __lt__(self, other):
         if isinstance(other, int):
-            return self.value < 0
+            return self.value < self.get_residue(other)
 
         if not isinstance(other, Mod):
             return NotImplemented
