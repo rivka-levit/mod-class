@@ -79,9 +79,7 @@ class Mod:
 
     def __sub__(self, other):
         if isinstance(other, int):
-            new_value = self.value - other
-
-            return Mod(new_value, self.modulus)
+            return Mod(self.value - other, self.modulus)
 
         if not isinstance(other, Mod):
             return NotImplemented
@@ -90,22 +88,17 @@ class Mod:
             raise TypeError('Cannot subtract Mod object with different '
                             'modulus.')
 
-        new_value = self.value - other.value
-        return Mod(new_value, self.modulus)
+        return Mod(self.value - other.value, self.modulus)
 
     def __rsub__(self, other):
         if isinstance(other, int):
-            new_value = other - self.value
-
-            return Mod(new_value, self.modulus)
+            return Mod(other - self.value, self.modulus)
 
         return NotImplemented
 
     def __mul__(self, other):
         if isinstance(other, int):
-            new_value = self.value * other
-
-            return Mod(new_value, self.modulus)
+            return Mod(self.value * other, self.modulus)
 
         if not isinstance(other, Mod):
             return NotImplemented
@@ -114,8 +107,7 @@ class Mod:
             raise TypeError('Cannot multiply Mod objects with different '
                             'modulus.')
 
-        new_value = self.value * other.value
-        return Mod(new_value, self.modulus)
+        return Mod(self.value * other.value, self.modulus)
 
     def __rmul__(self, other):
         return self.__mul__(other)
