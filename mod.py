@@ -126,8 +126,7 @@ class Mod:
 
     def __iadd__(self, other):
         if isinstance(other, int):
-            self._value = (self.value + other) % self.modulus
-
+            self.value = self.value + other
             return self
 
         if not isinstance(other, Mod):
@@ -143,7 +142,6 @@ class Mod:
     def __isub__(self, other):
         if isinstance(other, int):
             self.value = self.value - other
-
             return self
 
         if not isinstance(other, Mod):
@@ -159,7 +157,6 @@ class Mod:
     def __imul__(self, other):
         if isinstance(other, int):
             self.value = self.value * other
-
             return self
 
         if not isinstance(other, Mod):
@@ -173,10 +170,18 @@ class Mod:
         return self
 
     def __ipow__(self, other):
-        if not isinstance(other, int):
+        if isinstance(other, int):
+            self.value = self.value ** self.get_residue(other)
+            return self
+
+        if not isinstance(other, Mod):
             return NotImplemented
 
-        self.value = self.value ** other
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot operate with Mod objects with different '
+                            'modulus.')
+
+        self.value = self.value ** other.value
         return self
 
     def __lt__(self, other):
