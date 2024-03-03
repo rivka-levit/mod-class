@@ -63,9 +63,7 @@ class Mod:
 
     def __add__(self, other):
         if isinstance(other, int):
-            new_value = self.value + other
-
-            return Mod(new_value, self.modulus)
+            return Mod(self.value + other, self.modulus)
 
         if not isinstance(other, Mod):
             return NotImplemented
@@ -74,8 +72,7 @@ class Mod:
             raise TypeError('Cannot add Mod object with different '
                             'modulus.')
 
-        new_value = (self.value + other.value) % self.modulus
-        return Mod(new_value, self.modulus)
+        return Mod(self.value + other.value, self.modulus)
 
     def __radd__(self, other):
         return self.__add__(other)
