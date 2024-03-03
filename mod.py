@@ -18,15 +18,14 @@ class Mod:
 
     @value.setter
     def value(self, value: int) -> None:
+        self._value = self.get_residue(value)
+
+    def get_residue(self, value: int) -> int:
         if not isinstance(value, int):
             raise TypeError('Value must be an integer!')
 
         new_value = value % self.modulus
-
-        if value < 0:
-            self._value = new_value - self.modulus
-        else:
-            self._value = new_value
+        return new_value - self.modulus if value < 0 else new_value
 
     @property
     def modulus(self) -> int:
@@ -112,10 +111,18 @@ class Mod:
     def __rmul__(self, other):
         return self.__mul__(other)
 
-    def __pow__(self, power, modulo=None):
-        new_value = self.value ** power
+    def __pow__(self, other):
+        if isinstance(other, int):
+            return Mod(self.value ** self.get_residue(other), self.modulus)
 
-        return Mod(new_value, self.modulus)
+        if not isinstance(other, Mod):
+            return NotImplemented
+
+        if not self.validate_modulus(other):
+            raise TypeError('Cannot operate with Mod objects with different '
+                            'modulus.')
+
+        return Mod(self.value ** other.value, self.modulus)
 
     def __iadd__(self, other):
         if isinstance(other, int):

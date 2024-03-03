@@ -237,10 +237,19 @@ class TestMod(TestCase):
         with self.assertRaises(TypeError):
             mod * self.mod
 
-    def test_power_mod(self):
+    def test_mod_power_int(self):
         """Test power of a mod."""
 
         new_mod = self.mod ** 2
+
+        self.assertIsInstance(new_mod, Mod)
+        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.modulus, self.mod.modulus)
+
+    def test_mod_power_mod(self):
+        """Test mod by power of a mod."""
+
+        new_mod = self.mod ** Mod(2, 3)
 
         self.assertIsInstance(new_mod, Mod)
         self.assertEqual(new_mod.value, 1)
