@@ -190,7 +190,7 @@ class TestMod(TestCase):
         new_mod = self.mod - 4
 
         self.assertIsInstance(new_mod, Mod)
-        self.assertEqual(new_mod.value, -2)
+        self.assertEqual(new_mod.value, 1)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
 
     def test_subtract_mod_from_int(self):
@@ -199,7 +199,7 @@ class TestMod(TestCase):
         new_mod = 12 - self.mod
 
         self.assertIsInstance(new_mod, Mod)
-        self.assertEqual(new_mod.value, 1)
+        self.assertEqual(new_mod.value, -2)
         self.assertEqual(new_mod.modulus, self.mod.modulus)
 
     def test_multiply_two_mods(self):
@@ -299,7 +299,7 @@ class TestMod(TestCase):
         mod -= 4
 
         self.assertEqual(id(mod), mod_id)
-        self.assertEqual(mod.value, -1)
+        self.assertEqual(mod.value, 1)
 
     def test_mul_in_place_two_mods(self):
         """Test multiplying two mods in place."""
