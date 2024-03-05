@@ -1,4 +1,5 @@
 from functools import total_ordering
+import operator
 
 
 @total_ordering
@@ -20,6 +21,10 @@ class Mod:
     def value(self, value: int) -> None:
         self._value = self._get_residue(value)
 
+    @property
+    def modulus(self) -> int:
+        return self._modulus
+
     def _get_residue(self, value: int) -> int:
         if not isinstance(value, int):
             raise TypeError('Value must be an integer!')
@@ -37,12 +42,15 @@ class Mod:
 
         return other.value
 
-    @property
-    def modulus(self) -> int:
-        return self._modulus
+    def _perform_operation(self, other, op, *, in_place=False):
+        other_value = self._get_value(other)
+        new_value = op(self.value, other_value)
 
-    def validate_modulus(self, mod_obj):
-        return mod_obj.modulus == self.modulus
+        if in_place:
+            self.value = new_value
+            return self
+
+        return Mod(new_value, self.modulus)
 
     def __repr__(self):
         return f'Mod(value={self.value}, modulus={self.modulus})'
@@ -64,50 +72,40 @@ class Mod:
         return Mod(-self.value, self.modulus)
 
     def __add__(self, other):
-        other_value = self._get_value(other)
-        return Mod(self.value + other_value, self.modulus)
+        return self._perform_operation(other, operator.add)
 
     def __radd__(self, other):
         return self.__add__(other)
 
     def __sub__(self, other):
-        other_value = self._get_value(other)
-        return Mod(self.value - other_value, self.modulus)
+        return self._perform_operation(other, operator.sub)
+        # other_value = self._get_value(other)
+        # return Mod(self.value - other_value, self.modulus)
 
     def __rsub__(self, other):
         other_value = self._get_value(other)
         return Mod(other_value - self.value, self.modulus)
 
     def __mul__(self, other):
-        other_value = self._get_value(other)
-        return Mod(self.value * other_value, self.modulus)
+        return self._perform_operation(other, operator.mul)
 
     def __rmul__(self, other):
         return self.__mul__(other)
 
     def __pow__(self, other):
-        other_value = self._get_value(other)
-        return Mod(self.value ** other_value, self.modulus)
+        return self._perform_operation(other, operator.pow)
 
     def __iadd__(self, other):
-        other_value = self._get_value(other)
-        self.value += other_value
-        return self
+        return self._perform_operation(other, operator.add, in_place=True)
 
     def __isub__(self, other):
-        other_value = self._get_value(other)
-        self.value -= other_value
-        return self
+        return self._perform_operation(other, operator.sub, in_place=True)
 
     def __imul__(self, other):
-        other_value = self._get_value(other)
-        self.value *= other_value
-        return self
+        return self._perform_operation(other, operator.mul, in_place=True)
 
     def __ipow__(self, other):
-        other_value = self._get_value(other)
-        self.value **= other_value
-        return self
+        return self._perform_operation(other, operator.pow, in_place=True)
 
     def __lt__(self, other):
         other_value = self._get_value(other)
